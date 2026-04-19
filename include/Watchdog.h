@@ -115,11 +115,7 @@ public:
         watchImpl( ci::fs::path() );
     }
     //! Sets the last modification time of a file or directory. by default sets the time to the current time
-#if defined( CINDER_WINRT ) || ( defined( _MSC_VER ) && ( _MSC_VER >= 1900 ) )
     static void touch( const ci::fs::path &path, ci::fs::file_time_type time = ci::fs::file_time_type::clock::now() )
-#else
-    static void touch( const ci::fs::path &path, std::time_t time = std::time( nullptr ) )
-#endif
     {
         
         // if the file or directory exists change its last write time
@@ -409,11 +405,7 @@ protected:
         std::string                                             mFilter;
         std::function<void(const ci::fs::path&)>                mCallback;
         std::function<void(const std::vector<ci::fs::path>&)>   mListCallback;
-#if defined( CINDER_WINRT ) || ( defined( _MSC_VER ) && ( _MSC_VER >= 1900 ) )
 		std::map< std::string, ci::fs::file_time_type >         mModificationTimes;
-#else
-        std::map< std::string, time_t >                         mModificationTimes;
-#endif
     };
     
     friend class SleepyWatchdog;
